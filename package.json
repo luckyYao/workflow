@@ -1,0 +1,23 @@
+{
+  "name": "workflow",
+  "version": "1.0.0",
+  "description": "There are some useful, cool things in my workflow",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luckyYao/workflow.git"
+  },
+  "author": "MissSi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luckyYao/workflow/issues"
+  },
+  "homepage": "https://github.com/luckyYao/workflow#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-uglify": "^3.0.0"
+  }
+}
