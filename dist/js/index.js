@@ -1,7 +1,1 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var firstName = exports.firstName = 'Michael';
-var lastName = exports.lastName = 'Jackson';
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var firstName=exports.firstName="Michael",lastName=exports.lastName="Jackson";

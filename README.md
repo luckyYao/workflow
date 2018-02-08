@@ -10,7 +10,8 @@ This file is based on [Airbnb JavaScript编码规范指南(ES6)中文版](https:
 ## Gulp
 Function list:
 * babel + browserify => es6 compile
+* js compress
 * server & liveload
 
 ## TODO
-* 添加版本控制的脚本
+* add version control

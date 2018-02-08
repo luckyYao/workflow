@@ -8,6 +8,8 @@ const babel = require('gulp-babel');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
 
+const uglify = require('gulp-uglify');
+
 const opts = {
   dist: './dist/',
   jsFiles: './src/js/*.js',
@@ -22,6 +24,7 @@ gulp.task('babel', () => {
       presets: ['env'],
     }))
     .pipe(connect.reload())
+    .pipe(uglify())
     .pipe(gulp.dest(opts.distJs));
 });
 
