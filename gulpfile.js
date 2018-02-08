@@ -8,26 +8,42 @@ const babel = require('gulp-babel');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
 
-// js compress
+// js minify
 const uglify = require('gulp-uglify');
 
 // sass -> css
 const sass = require('gulp-ruby-sass');
 
-// image compress
+// image minify
 const imagemin = require('gulp-imagemin');
+
+// html minify
+const htmlmin = require('gulp-htmlmin');
 
 const opts = {
   dist: './dist/',
+
   jsFiles: './src/js/*.js',
   distJs: './dist/js/',
+
   scssFiles: './src/scss/*.scss',
   distCss: './dist/css',
+
   imgFiles: './src/img/*.*',
   distImg: './dist/img/',
-  htmlFiles: './*.html',
-  watchFiles: ['src/*.html', 'src/css/*.css', 'src/js/*.js'],
+
+  htmlFiles: './src/html/*.html',
+  distHtml: './',
+
+  watchFiles: ['src/html/*.html', 'src/scss/*.scss', 'src/js/*.js', 'src/img/*.*'],
+  watchTasks: ['babel', 'browserify', 'sass', 'img', 'html'],
 };
+
+gulp.task('connect', () => {
+  connect.server({
+    livereload: true,
+  });
+});
 
 gulp.task('babel', () => {
   gulp.src(opts.jsFiles)
@@ -63,22 +79,18 @@ gulp.task('img', () => {
     .pipe(gulp.dest(opts.distImg));
 });
 
-gulp.task('connect', () => {
-  connect.server({
-    livereload: true,
-  });
-});
-
 gulp.task('html', () => {
   gulp.src(opts.htmlFiles)
-    .pipe(connect.reload());
+    .pipe(connect.reload())
+    .pipe(htmlmin({ collapseWhitespace: true }))
+    .pipe(gulp.dest(opts.distHtml));
 });
 
 gulp.task('watch', () => {
-  gulp.watch([opts.htmlFiles], ['html']);
-  gulp.watch([opts.jsFiles], ['babel', 'browserify']);
-  gulp.watch([opts.scssFiles], ['sass']);
-  gulp.watch([opts.imgFiles], ['img']);
+  gulp.watch(
+    [opts.watchFiles],
+    [opts.watchTasks],
+  );
 });
 
 gulp.task('default', ['html', 'connect', 'babel', 'browserify', 'sass', 'img', 'watch']);
