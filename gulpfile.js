@@ -1,4 +1,6 @@
 const gulp = require('gulp');
+
+// liveload
 const connect = require('gulp-connect');
 
 // es6 -> es5
@@ -19,6 +21,7 @@ gulp.task('babel', () => {
     .pipe(babel({
       presets: ['env'],
     }))
+    .pipe(connect.reload())
     .pipe(gulp.dest(opts.distJs));
 });
 

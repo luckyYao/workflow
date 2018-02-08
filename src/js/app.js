@@ -1,2 +1,3 @@
-import {firstName, lastName} from './index.js';
-console.log(firstName + ' ' + lastName);
+import { firstName, lastName } from './index';
+
+console.log(`${firstName} ${lastName}`);

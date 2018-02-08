@@ -1,2 +1,2 @@
-export var firstName = 'Michael';
-export var lastName = 'Jackson';
+export const firstName = 'Michael';
+export const lastName = 'Jackson';
