@@ -14,12 +14,17 @@ const uglify = require('gulp-uglify');
 // sass -> css
 const sass = require('gulp-ruby-sass');
 
+// image compress
+const imagemin = require('gulp-imagemin');
+
 const opts = {
   dist: './dist/',
   jsFiles: './src/js/*.js',
   distJs: './dist/js/',
   scssFiles: './src/scss/*.scss',
   distCss: './dist/css',
+  imgFiles: './src/img/*.*',
+  distImg: './dist/img/',
   htmlFiles: './*.html',
   watchFiles: ['src/*.html', 'src/css/*.css', 'src/js/*.js'],
 };
@@ -51,6 +56,13 @@ gulp.task('sass', () => (
     .pipe(gulp.dest(opts.distCss))
 ));
 
+gulp.task('img', () => {
+  gulp.src(opts.imgFiles)
+    .pipe(connect.reload())
+    .pipe(imagemin())
+    .pipe(gulp.dest(opts.distImg));
+});
+
 gulp.task('connect', () => {
   connect.server({
     livereload: true,
@@ -66,6 +78,7 @@ gulp.task('watch', () => {
   gulp.watch([opts.htmlFiles], ['html']);
   gulp.watch([opts.jsFiles], ['babel', 'browserify']);
   gulp.watch([opts.scssFiles], ['sass']);
+  gulp.watch([opts.imgFiles], ['img']);
 });
 
-gulp.task('default', ['html', 'connect', 'babel', 'browserify', 'sass', 'watch']);
+gulp.task('default', ['html', 'connect', 'babel', 'browserify', 'sass', 'img', 'watch']);

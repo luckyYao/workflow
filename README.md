@@ -12,6 +12,10 @@ Function list:
 * babel + browserify => es6 compile
 * js compress
 * server & liveload
+* sass compile
+* image compress
 
 ## TODO
 * add version control
+* 图片压缩力度太小的问题解决
+* 添加html压缩
