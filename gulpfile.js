@@ -8,12 +8,18 @@ const babel = require('gulp-babel');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
 
+// js compress
 const uglify = require('gulp-uglify');
+
+// sass -> css
+const sass = require('gulp-ruby-sass');
 
 const opts = {
   dist: './dist/',
   jsFiles: './src/js/*.js',
   distJs: './dist/js/',
+  scssFiles: './src/scss/*.scss',
+  distCss: './dist/css',
   htmlFiles: './*.html',
   watchFiles: ['src/*.html', 'src/css/*.css', 'src/js/*.js'],
 };
@@ -37,6 +43,14 @@ gulp.task('browserify', () => {
     .pipe(gulp.dest(opts.distJs));
 });
 
+gulp.task('sass', () => (
+  sass(opts.scssFiles, {
+    style: 'compressed',
+  })
+    .pipe(connect.reload())
+    .pipe(gulp.dest(opts.distCss))
+));
+
 gulp.task('connect', () => {
   connect.server({
     livereload: true,
@@ -51,6 +65,7 @@ gulp.task('html', () => {
 gulp.task('watch', () => {
   gulp.watch([opts.htmlFiles], ['html']);
   gulp.watch([opts.jsFiles], ['babel', 'browserify']);
+  gulp.watch([opts.scssFiles], ['sass']);
 });
 
-gulp.task('default', ['html', 'connect', 'babel', 'browserify', 'watch']);
+gulp.task('default', ['html', 'connect', 'babel', 'browserify', 'sass', 'watch']);
