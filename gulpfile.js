@@ -1,40 +1,50 @@
-var gulp = require('gulp');
-var connect = require('gulp-connect');
-var babel = require('gulp-babel');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
+const gulp = require('gulp');
+const connect = require('gulp-connect');
 
-gulp.task('babel', function() {
-  gulp.src('./src/*.js')
+// es6 -> es5
+const babel = require('gulp-babel');
+const browserify = require('browserify');
+const source = require('vinyl-source-stream');
+
+const opts = {
+  dist: './dist/',
+  jsFiles: './src/js/*.js',
+  distJs: './dist/js/',
+  htmlFiles: './*.html',
+  watchFiles: ['src/*.html', 'src/css/*.css', 'src/js/*.js'],
+};
+
+gulp.task('babel', () => {
+  gulp.src(opts.jsFiles)
     .pipe(babel({
-      presets: ['env']
+      presets: ['env'],
     }))
-    .pipe(gulp.dest('lib'))
+    .pipe(gulp.dest(opts.distJs));
 });
 
-gulp.task("browserify", function () {
-  var b = browserify({
-    entries: "lib/app.js"
+gulp.task('browserify', () => {
+  const b = browserify({
+    entries: `${opts.distJs}app.js`,
   });
   return b.bundle()
-    .pipe(source("bundle.js"))
-    .pipe(gulp.dest("lib"));
+    .pipe(source('bundle.js'))
+    .pipe(gulp.dest(opts.distJs));
 });
 
-gulp.task('connect', function() {
+gulp.task('connect', () => {
   connect.server({
-    livereload: true
+    livereload: true,
   });
 });
 
-gulp.task('html', function () {
-  gulp.src('./*.html')
+gulp.task('html', () => {
+  gulp.src(opts.htmlFiles)
     .pipe(connect.reload());
 });
 
-gulp.task('watch', function () {
-  gulp.watch(['./*.html'], ['html']);
-  gulp.watch(['./src/*.js'], ['babel', 'browserify']);
+gulp.task('watch', () => {
+  gulp.watch([opts.htmlFiles], ['html']);
+  gulp.watch([opts.jsFiles], ['babel', 'browserify']);
 });
 
 gulp.task('default', ['html', 'connect', 'babel', 'browserify', 'watch']);
