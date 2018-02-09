@@ -16,8 +16,8 @@ Function list:
 * babel + browserify => es6 compile & minify
 * sass compile & minify
 * image minify
+there are many ways to minify image.I use Smushit here.this [article](https://www.jianshu.com/p/d6c11d6619e0) may help you to choose.
 * html minify
 
 ## TODO
 * add version control
-* 图片压缩力度太小的问题解决

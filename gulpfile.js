@@ -15,7 +15,7 @@ const uglify = require('gulp-uglify');
 const sass = require('gulp-ruby-sass');
 
 // image minify
-const imagemin = require('gulp-imagemin');
+const smushit = require('gulp-smushit');
 
 // html minify
 const htmlmin = require('gulp-htmlmin');
@@ -75,7 +75,9 @@ gulp.task('sass', () => (
 gulp.task('img', () => {
   gulp.src(opts.imgFiles)
     .pipe(connect.reload())
-    .pipe(imagemin())
+    .pipe(smushit({
+      verbose: true,
+    }))
     .pipe(gulp.dest(opts.distImg));
 });
 
